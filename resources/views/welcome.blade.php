@@ -155,9 +155,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <a href="#" class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
                         <span class="text-2xl text-terra">🌶️</span>
-                        <span class="ml-1 text-2xl font-bold text-terra  hidden sm:block">Sabores</span>
+                        <span class="text-2xl font-bold text-terra">Sabores</span>
                     </a>
                 </div>
 
@@ -187,9 +187,8 @@
                     <div class="relative ml-4">
                         <select
                             class="appearance-none bg-transparent border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-terra transition-all">
-                            <option value="pt-MZ">🇲🇿 Português (MZ)</option>
-                            <option value="pt-PT">🇵🇹 Português (PT)</option>
-                            <option value="en">🇬🇧 English</option>
+                            <option value="pt">Português</option>
+                            <option value="en">English</option>
                         </select>
                         <div class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
                             <svg class="h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -201,10 +200,10 @@
                         </div>
                     </div>
 
-                    <button
+                    <a href="/painel/u/devndodo"
                         class="ml-6 bg-terra text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
                         Partilhar Receita
-                    </button>
+                </a>
                 </div>
 
                 <div class="-mr-2 flex md:hidden">
@@ -255,7 +254,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24 md:pt-20 md:pb-40 animate-fade-in">
             <div class="lg:grid lg:grid-cols-2 lg:gap-8 items-center">
                 <div class="mb-12 lg:mb-0">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-gray-900 mb-6">
+                    <h1 class="text-4xl uppercase md:text-5xl lg:text-6xl font-display font-bold text-gray-900 mb-6">
                         <span class="text-terra">Sabores</span> que contam<br>
                         <span class="text-oceano">histórias</span> moçambicanas
                     </h1>
@@ -264,12 +263,12 @@
                         Receitas autênticas, técnicas modernas.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button
+                        <a href="/explorar"
                             class="bg-terra text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl flex items-center justify-center transform hover:scale-105">
                             <span class="mr-2">👨‍🍳</span> Explorar Receitas
-                        </button>
+                        </a>
                         <button
-                            class="border-2 border-terra text-terra px-6 py-3 rounded-full font-medium hover:bg-terra hover:text-white transition-all flex items-center justify-center transform hover:scale-105">
+                            class="border-2 border-terra text-terra px-6 py-3 rounded-full font-medium hover:bg-terra hover:opacity-80 transition-all flex items-center justify-center transform hover:scale-105">
                             <span class="mr-2">🎥</span> Ver Demonstrações
                         </button>
                     </div>
@@ -385,7 +384,8 @@
                     </h2>
                     <p class="text-lg text-gray-600">Receitas que definem a essência moçambicana</p>
                 </div>
-                <button class="mt-4 md:mt-0 flex items-center text-terra font-medium hover:underline group">
+                <a href="/explorar"
+                    class="mt-4 md:mt-0 flex items-center text-terra font-medium hover:underline group">
                     Ver todas receitas
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 ml-1 transform group-hover:translate-x-1 transition-transform"
@@ -394,7 +394,7 @@
                             d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
                             clip-rule="evenodd" />
                     </svg>
-                </button>
+                </a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -551,10 +551,10 @@
                                 <p class="font-medium">Médio</p>
                             </div>
                         </div>
-                        <button
-                            class="bg-terra text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg flex items-center transform hover:scale-105">
+                        <a href="/explorar/receita"
+                            class="bg-terra text-white w-full justify-center px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg flex items-center transform hover:scale-105">
                             <span class="mr-2">👨‍🍳</span> Ver Receita Completa
-                        </button>
+                        </a>
                     </div>
                     <div class="md:w-1/2 relative">
                         <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"

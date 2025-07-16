@@ -231,26 +231,59 @@
 </head>
 
 <body class="antialiased">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm" aria-label="Navegação principal">
+     <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm" aria-label="Navegação principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <a href="#" class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
                         <span class="text-2xl text-terra">🌶️</span>
-                        <span class="ml-1 text-2xl font-bold text-terra hidden sm:block">Sabores</span>
+                        <span class="text-2xl font-bold text-terra">Sabores</span>
                     </a>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="#explorar"
-                        class="px-3 py-2 text-sm font-medium hover:text-terra transition-colors">Explorar</a>
-                    <button class="text-terra">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <div class="hidden md:flex items-center space-x-6">
+                    <div class="relative flex items-center justify-between">
+                        <input type="text" placeholder="Pesquisar receitas..."
+                            class="pl-10 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-terra focus:border-transparent w-64 transition-all duration-300">
+                        <svg class="absolute right-2 top-2.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd" />
                         </svg>
+                    </div>
+
+                    <div class="ml-6 flex items-center space-x-6">
+                        <a href="/"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Home</a>
+                        <a href="/explorar"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Explorar</a>
+                        <a href="#eventos"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Eventos</a>
+                        <a href="#sobre"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Sobre</a>
+                    </div>
+
+                    <div class="relative ml-4">
+                        <select
+                            class="appearance-none bg-transparent border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-terra transition-all">
+                            <option value="pt">Português</option>
+                            <option value="en">English</option>
+                        </select>
+                        <div class="absolute right-1 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button
+                        class="ml-6 bg-terra text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
+                        Partilhar Receita
                     </button>
                 </div>
 
@@ -271,23 +304,38 @@
         <!-- Mobile menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-                <a href="#explorar"
-                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Explorar</a>
+                <a href="/"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Home</a>
                 <a href="#comunidade"
                     class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Comunidade</a>
-                <a href="#favoritos"
-                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Favoritos</a>
-                <a href="#perfil"
-                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Perfil</a>
+                <a href="#eventos"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Eventos</a>
+                <a href="#sobre"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Sobre</a>
+                <button
+                    class="w-full mt-2 bg-terra text-white px-4 py-2 rounded-full text-base font-medium hover:bg-opacity-90 transition-all shadow-md">
+                    Partilhar Receita
+                </button>
             </div>
         </div>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <nav class="bg-gray-100 py-2 px-4 mt-16" aria-label="Navegação secundária">
+        <ol class="flex space-x-2 text-sm">
+            <li><a href="/" class="text-terra hover:underline">Home</a></li>
+            <li>/</li>
+            <li><a href="/explorar" class="text-terra hover:underline">Explorar</a></li>
+            <li>/</li>
+            <li aria-current="page">Receita</li>
+        </ol>
     </nav>
 
     <!-- Backdrop for mobile menu -->
     <div class="nav-backdrop" id="nav-backdrop"></div>
 
     <!-- Main Content -->
-    <main class="pt-16 pb-20">
+    <main class="md:pt-16 pb-20">
         <!-- Recipe Header -->
         <header class="recipe-header relative">
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 z-10"></div>
@@ -338,7 +386,7 @@
             </div>
 
             <!-- Back button -->
-            <a href="#"
+            <a href="/explorar"
                 class="absolute top-4 left-4 z-20 bg-white/90 p-2 rounded-full shadow-md hover:bg-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -701,13 +749,7 @@
                     </div>
                     <div class="aspect-w-16 aspect-h-9 bg-black">
                         <div class="flex items-center justify-center h-full bg-gray-100 text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/U3xpEBeRTlg?si=OlHdBPvsFRJtLBHV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             <span class="sr-only">Vídeo tutorial</span>
                         </div>
                     </div>

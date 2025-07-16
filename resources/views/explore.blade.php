@@ -187,25 +187,58 @@
 
 <body class="antialiased">
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm" aria-label="Navegação principal">
+    <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm" aria-label="Navegação principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <a href="#" class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
                         <span class="text-2xl text-terra">🌶️</span>
-                        <span class="ml-1 text-2xl font-bold text-terra hidden sm:block">Sabores</span>
+                        <span class="text-2xl font-bold text-terra ">Sabores</span>
                     </a>
                 </div>
 
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="#explorar"
-                        class="px-3 py-2 text-sm font-medium hover:text-terra transition-colors">Explorar</a>
-                    <button class="text-terra">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <div class="hidden md:flex items-center space-x-6">
+                    <div class="relative flex items-center justify-between">
+                        <input type="text" placeholder="Pesquisar receitas..."
+                            class="pl-10 px-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-terra focus:border-transparent w-64 transition-all duration-300">
+                        <svg class="absolute right-2 top-2.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd" />
                         </svg>
+                    </div>
+
+                    <div class="ml-6 flex items-center space-x-6">
+                        <a href="/"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Home</a>
+                        <a href="#comunidade"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Comunidade</a>
+                        <a href="#eventos"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Eventos</a>
+                        <a href="#sobre"
+                            class="px-3 py-2 text-sm font-medium border-b-2 border-transparent hover:border-terra hover:text-terra transition-colors">Sobre</a>
+                    </div>
+
+                    <div class="relative ml-4">
+                        <select
+                            class="appearance-none bg-transparent border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-1 focus:ring-terra transition-all">
+                            <option value="pt">Português</option>
+                            <option value="en">English</option>
+                        </select>
+                        <div class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button
+                        class="ml-6 bg-terra text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
+                        Partilhar Receita
                     </button>
                 </div>
 
@@ -226,33 +259,46 @@
         <!-- Mobile menu -->
         <div class="md:hidden hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
-                <a href="#explorar"
-                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Explorar</a>
+                <a href="/"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Home</a>
                 <a href="#comunidade"
                     class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Comunidade</a>
-                <a href="#favoritos"
-                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Favoritos</a>
-                <a href="#perfil"
-                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Perfil</a>
+                <a href="#eventos"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Eventos</a>
+                <a href="#sobre"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-terra hover:text-white rounded-md transition-colors">Sobre</a>
+                <button
+                    class="w-full mt-2 bg-terra text-white px-4 py-2 rounded-full text-base font-medium hover:bg-opacity-90 transition-all shadow-md">
+                    Partilhar Receita
+                </button>
             </div>
         </div>
+    </nav>
+
+    <!-- Breadcrumbs -->
+    <nav class="bg-gray-100 py-2 px-4 mt-16" aria-label="Navegação secundária">
+        <ol class="flex space-x-2 text-sm">
+            <li><a href="/" class="text-terra hover:underline">Home</a></li>
+            <li>/</li>
+            <li aria-current="page">Explorar</li>
+        </ol>
     </nav>
 
     <!-- Main Content -->
     <main class="pt-16 pb-8">
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-terra/10 to-oceano/10 py-12 px-4 sm:px-6 lg:px-8">
+        <section class="bg-gradient-to-r from-terra/10 to-oceano/10 md:py-12 px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto text-center">
-                <h1 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h1 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4 ">
                     <span class="text-terra">Explore</span> a diversidade culinária de Moçambique
                 </h1>
                 <p class="text-lg text-gray-600 mb-6">
                     Descubra receitas tradicionais e contemporâneas organizadas por categoria e região.
                 </p>
-                <div class="relative max-w-md mx-auto">
+                <div class="relative max-w-md mx-auto pb-10 md:pb-0">
                     <input type="text" placeholder="Pesquisar receitas..."
                         class="w-full pl-10 pr-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-terra focus:border-transparent">
-                    <svg class="absolute left-3 top-3.5 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                    <svg class="absolute left-3 top-3.5 h-5 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
@@ -353,8 +399,8 @@
             <div class="max-w-7xl mx-auto">
                 <div class="masonry-grid">
                     <!-- Recipe 1 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <a href="/explorar/receita" class="masonry-item block">
+                        <div class="recipe-card block bg-white rounded-xl overflow-hidden shadow-md">
                             <div class="recipe-card-image"
                                 style="background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80')">
                                 <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">⭐ Clássico</span>
@@ -377,11 +423,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Recipe 2 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
+                    <a href="/explorar/receita" class="masonry-item block">
+                        <div class="recipe-card  bg-white rounded-xl overflow-hidden shadow-md">
                             <div class="recipe-card-image"
                                 style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80')">
                                 <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🌊
@@ -404,7 +450,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Recipe 3 -->
                     <div class="masonry-item">
