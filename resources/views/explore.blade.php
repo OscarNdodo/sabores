@@ -236,10 +236,10 @@
                         </div>
                     </div>
 
-                    <button
+                    <a href="{{ route('login') }}"
                         class="ml-6 bg-terra text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
                         Partilhar Receita
-                    </button>
+                    </a>
                 </div>
 
                 <div class="-mr-2 flex md:hidden">
@@ -400,7 +400,8 @@
                 <div class="masonry-grid">
                     <!-- Recipe Item -->
                     @forelse ($recipes as $item)
-                        <a href="{{ route('explore.recipe', $item->id * now()->format("dmy")) }}" class="masonry-item block">
+                        <a href="{{ route('explore.recipe', $item->id * now()->format('dmy')) }}"
+                            class="masonry-item block">
                             <div class="recipe-card block bg-white rounded-xl overflow-hidden shadow-md">
                                 <div class="recipe-card-image"
                                     style="background-image: url('{{ asset("/files/$item->image") ?? asset('assets/images/no-image.png') }}');">
@@ -428,7 +429,7 @@
                                     <p class="text-gray-600 text-sm mb-3">{{ $item->description }}</p>
                                     <div class="flex justify-between items-center overflow-auto">
                                         <div class="flex items-center">
-                                            <img src="https://randomuser.me/api/portraits/women/42.jpg"
+                                            <img src="{{ $item->user->profile_image ?? url('https://www.svgrepo.com/show/228291/user-profile.svg') }}"
                                                 alt="Chef Amina"
                                                 class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
                                             <span

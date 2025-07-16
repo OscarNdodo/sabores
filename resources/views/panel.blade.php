@@ -149,7 +149,7 @@
             color: white;
         }
 
-       
+
         /* Responsivo */
         @media (max-width: 767px) {
             .tab-nav {
@@ -256,59 +256,97 @@
         }
 
 
-        /* IA thiking */ /* Animação da CPU */
-    .cpu-animation {
-        animation: pulse 1.5s infinite ease-in-out;
-    }
-    
-    /* Animação das linhas de processamento */
-    .processing-1 {
-        animation: processingAnim 2s infinite 0.1s;
-    }
-    .processing-2 {
-        animation: processingAnim 2s infinite 0.3s;
-    }
-    .processing-3 {
-        animation: processingAnim 2s infinite 0.5s;
-    }
-    .processing-4 {
-        animation: processingAnim 2s infinite 0.2s;
-    }
-    .processing-5 {
-        animation: processingAnim 2s infinite 0.4s;
-    }
-    .processing-6 {
-        animation: processingAnim 2s infinite 0.6s;
-    }
-    
-    /* Animação dos circuitos internos */
-    .circuit-1, .circuit-5 {
-        animation: circuitAnim 1.5s infinite;
-    }
-    .circuit-2, .circuit-6 {
-        animation: circuitAnim 1.5s infinite 0.2s;
-    }
-    .circuit-3, .circuit-7 {
-        animation: circuitAnim 1.5s infinite 0.4s;
-    }
-    .circuit-4, .circuit-8 {
-        animation: circuitAnim 1.5s infinite 0.6s;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 0.9; }
-        50% { transform: scale(1.05); opacity: 1; }
-    }
-    
-    @keyframes processingAnim {
-        0%, 100% { opacity: 0.3; stroke-width: 1; }
-        50% { opacity: 1; stroke-width: 1.5; }
-    }
-    
-    @keyframes circuitAnim {
-        0%, 100% { opacity: 0.2; }
-        50% { opacity: 0.8; }
-    }
+        /* IA thiking */
+        /* Animação da CPU */
+        .cpu-animation {
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        /* Animação das linhas de processamento */
+        .processing-1 {
+            animation: processingAnim 2s infinite 0.1s;
+        }
+
+        .processing-2 {
+            animation: processingAnim 2s infinite 0.3s;
+        }
+
+        .processing-3 {
+            animation: processingAnim 2s infinite 0.5s;
+        }
+
+        .processing-4 {
+            animation: processingAnim 2s infinite 0.2s;
+        }
+
+        .processing-5 {
+            animation: processingAnim 2s infinite 0.4s;
+        }
+
+        .processing-6 {
+            animation: processingAnim 2s infinite 0.6s;
+        }
+
+        /* Animação dos circuitos internos */
+        .circuit-1,
+        .circuit-5 {
+            animation: circuitAnim 1.5s infinite;
+        }
+
+        .circuit-2,
+        .circuit-6 {
+            animation: circuitAnim 1.5s infinite 0.2s;
+        }
+
+        .circuit-3,
+        .circuit-7 {
+            animation: circuitAnim 1.5s infinite 0.4s;
+        }
+
+        .circuit-4,
+        .circuit-8 {
+            animation: circuitAnim 1.5s infinite 0.6s;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+
+        @keyframes processingAnim {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                stroke-width: 1;
+            }
+
+            50% {
+                opacity: 1;
+                stroke-width: 1.5;
+            }
+        }
+
+        @keyframes circuitAnim {
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
 
         /* Animação da barra de progresso */
         .ai-progress {
@@ -489,7 +527,8 @@
                             </button>
                         </div>
 
-                        <form id="generate-recipe-form" class="space-y-4" method="get" action="{{ route('panel.recipes.ai') }}">
+                        <form id="generate-recipe-form" class="space-y-4" method="get"
+                            action="{{ route('panel.recipes.ai') }}">
 
                             <div>
                                 <label for="ai-recipe-title" class="block text-sm font-medium text-gray-700 mb-1">
@@ -540,8 +579,9 @@
                     <div class="dashboard-card bg-white rounded-xl shadow-sm p-6 hover-grow">
                         <div class="flex items-center justify-between">
                             <div>
-                                <h3 class="text-lg font-medium text-gray-900 mb-2">Receitas</h3>
-                                <p class="text-3xl font-bold text-terra">12</p>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">Receitas Publicadas</h3>
+                                <p class="text-3xl font-bold text-terra">
+                                    {{ $recipes->count() > 10 ? $recipes->count() : '0' . $recipes->count() }}</p>
                             </div>
                             <div class="bg-terra/10 text-terra p-3 rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -563,7 +603,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-lg font-medium text-gray-900 mb-2">Taxa de Cliques</h3>
-                                <p class="text-3xl font-bold text-terra">24</p>
+                                <p class="text-3xl font-bold text-terra">{{ $views > 10 ? $views : '0' . $views }}</p>
                             </div>
                             <div class="bg-sol/10 text-sol p-3 rounded-full">
                                 <img src="https://www.svgrepo.com/show/488858/click.svg" alt="Ícone de clique"
@@ -609,60 +649,69 @@
                     </div>
                 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
                 <h2 class="font-display text-xl font-bold mb-6">Atividade Recente</h2>
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
                     <ul class="divide-y divide-gray-200">
-                        <li class="p-4 hover:bg-gray-50 transition-colors hover-grow">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-folha/10 text-folha p-2 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                    </svg>
+
+                        @foreach ($recent_recipes as $item)
+                            <li class="p-4 hover:bg-gray-50 transition-colors hover-grow">
+                                <div class="flex items-center gap-3">
+                                    <div class="bg-folha/10 text-folha p-2 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Você publicou <cite
+                                                class="text-red-700">{{ $item->title }}</cite></p>
+                                        <p class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
+                                    </div>
+                                    <a href="{{ route('explore.recipe', $item->id * now()->format('dmy')) }}"
+                                        class="ml-auto text-terra hover:underline text-sm">Visualizar</a>
                                 </div>
-                                <div>
-                                    <p class="font-medium">Você publicou "Frango à Zambeziana"</p>
-                                    <p class="text-sm text-gray-500">2 dias atrás</p>
-                                </div>
-                                <button class="ml-auto text-terra hover:underline text-sm">Ver</button>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
+
+                        @foreach ($recent_views as $item)
+                            
                         <li class="p-4 hover:bg-gray-50 transition-colors hover-grow">
                             <div class="flex items-center gap-3">
                                 <div class="bg-sol/10 text-sol p-2 rounded-full">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p class="font-medium">Maria favoritou sua receita "Matapa Tradicional"</p>
-                                    <p class="text-sm text-gray-500">5 dias atrás</p>
-                                </div>
-                                <button class="ml-auto text-terra hover:underline text-sm">Ver</button>
-                            </div>
-                        </li>
-                        <li class="p-4 hover:bg-gray-50 transition-colors hover-grow">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-oceano/10 text-oceano p-2 rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
+                                            d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                            d="M2 12C2 12 5 7 12 7C19 7 22 12 22 12C22 12 19 17 12 17C5 17 2 12 2 12Z" />
                                     </svg>
                                 </div>
                                 <div>
-                                    <p class="font-medium">Carlos comentou: "Adorei sua receita de Xima!"</p>
-                                    <p class="text-sm text-gray-500">1 semana atrás</p>
+                                    <p class="font-medium">A receita <cite
+                                                class="text-red-700">{{ $item->recipe->title }}</cite> recebeu uma visualização.</p>
+                                    <p class="text-sm text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
                                 </div>
-                                <button class="ml-auto text-terra hover:underline text-sm">Responder</button>
+                                <button class="ml-auto text-terra hover:underline text-sm">Analisar</button>
                             </div>
                         </li>
+                        @endforeach
+                       
                     </ul>
                     <div class="px-4 py-3 bg-gray-50 text-right">
-                        <button class="text-terra text-sm font-medium hover:underline">Ver toda atividade</button>
+                        <button class="text-terra text-sm font-medium hover:underline">Ver analise de actividade</button>
                     </div>
                 </div>
             </div>
@@ -1190,7 +1239,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Foto de Perfil</label>
                                 <div class="flex items-center gap-4">
-                                    <img src="{{ auth()->user()->profile_photo_url ?? 'https://www.svgrepo.com/show/498296/profile-2user.svg' }}"
+                                    <img src="{{ auth()->user()->profile_photo_url ?? url('https://www.svgrepo.com/show/228291/user-profile.svg') }}"
                                         alt="Utilizador" class="w-16 h-16 rounded-full">
                                     <button type="button" class="text-sm text-terra font-medium hover:text-red-700">
                                         Alterar foto
@@ -1217,31 +1266,31 @@
 
 
 
-    {{-- IA Thinking --}}
-    <div id="ai-loading"
-        class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/30 bg-opacity-50 backdrop-blur-sm">
-        <div class="bg-white rounded-xl shadow-lg w-full max-w-sm p-6 text-center">
-            <!-- CPU animado -->
-            <div class="cpu-animation mx-auto mb-6 w-16 h-16 relative w-full flex items-center justify-center">
-                <img src="https://www.svgrepo.com/show/200720/cpu-processor.svg" class="h-full w-full">
-            </div>
+        {{-- IA Thinking --}}
+        <div id="ai-loading"
+            class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/30 bg-opacity-50 backdrop-blur-sm">
+            <div class="bg-white rounded-xl shadow-lg w-full max-w-sm p-6 text-center">
+                <!-- CPU animado -->
+                <div class="cpu-animation mx-auto mb-6 w-16 h-16 relative w-full flex items-center justify-center">
+                    <img src="https://www.svgrepo.com/show/200720/cpu-processor.svg" class="h-full w-full">
+                </div>
 
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Processando...</h3>
-            <p id="ai-tip" class="text-sm text-gray-600 mb-4">Buscando inspiração em receitas tradicionais
-                moçambicanas...</p>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Processando...</h3>
+                <p id="ai-tip" class="text-sm text-gray-600 mb-4">Buscando inspiração em receitas tradicionais
+                    moçambicanas...</p>
 
-            <!-- Barra de progresso animada -->
-            <div class="w-full bg-gray-200 rounded-full h-2.5">
-                <div class="ai-progress bg-gradient-to-r from-red-500 to-yellow-500 h-2.5 rounded-full"
-                    style="width: 0%"></div>
-            </div>
+                <!-- Barra de progresso animada -->
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                    <div class="ai-progress bg-gradient-to-r from-red-500 to-yellow-500 h-2.5 rounded-full"
+                        style="width: 0%"></div>
+                </div>
 
-            <!-- Dicas aleatórias -->
-            <div class="mt-4 text-xs text-gray-500 italic">
-                <p class="">Aguarde, enquanto criamos uma receita incrível para você</p>
+                <!-- Dicas aleatórias -->
+                <div class="mt-4 text-xs text-gray-500 italic">
+                    <p class="">Aguarde, enquanto criamos uma receita incrível para você</p>
+                </div>
             </div>
         </div>
-    </div>
 
 
 

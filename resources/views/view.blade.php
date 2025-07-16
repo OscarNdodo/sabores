@@ -281,10 +281,10 @@
                         </div>
                     </div>
 
-                    <button
+                    <a href="{{ route('login') }}"
                         class="ml-6 bg-terra text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
                         Partilhar Receita
-                    </button>
+                    </a>
                 </div>
 
                 <div class="-mr-2 flex md:hidden">
@@ -405,7 +405,7 @@
             </div>
 
             <!-- Back button -->
-            <a href="/explorar"
+            <a href="{{ route('explore') }}"
                 class="absolute top-4 left-4 z-20 bg-white/90 p-2 rounded-full shadow-md hover:bg-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -432,8 +432,8 @@
             <div class="bg-white -mt-8 rounded-xl shadow-md p-4 mb-6 relative z-30">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Chef Amina"
-                            class="w-12 h-12 rounded-full border-2 border-white shadow-md">
+                        <img src="{{ $recipe->user->profile_image ?? url('https://www.svgrepo.com/show/228291/user-profile.svg') }}"
+                            alt="Chef Amina" class="w-12 h-12 rounded-full border-2 border-white shadow-md">
                         <div>
                             <h3 class="font-medium">Chef {{ $recipe->user->username ?? $recipe->user->name }}</h3>
                             <p class="text-gray-600 text-sm">{{ $recipe->user->bio ?? 'Sem descrição de biografia' }}
@@ -458,9 +458,9 @@
                         data-tab="instructions">
                         Preparação
                     </button>
-                    <button class="step-nav-item flex-1 py-3 px-4 text-sm font-medium text-center" data-tab="tips">
+                    {{-- <button class="step-nav-item flex-1 py-3 px-4 text-sm font-medium text-center" data-tab="tips">
                         Dicas
-                    </button>
+                    </button> --}}
                 </div>
             </div>
 
@@ -500,7 +500,7 @@
                 </div>
 
                 <!-- Cooking Tools -->
-                <div class="bg-gray-50 rounded-xl p-4 mb-8">
+                {{-- <div class="bg-gray-50 rounded-xl p-4 mb-8">
                     <h3 class="font-medium text-gray-900 mb-3">Utensílios Necessários</h3>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="flex items-center gap-2">
@@ -536,10 +536,10 @@
                             <span>Moedor/processador</span>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Nutrition Info -->
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-8">
+                {{-- <div class="bg-white rounded-xl shadow-sm p-4 mb-8">
                     <h3 class="font-medium text-gray-900 mb-3">Informação Nutricional (por porção)</h3>
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div>
@@ -555,118 +555,45 @@
                             <p class="text-xs text-gray-600">Carboidratos</p>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </section>
 
             <!-- Instructions Section -->
             <section id="instructions" class="recipe-section hidden">
-                <h2 class="font-display text-xl font-bold mb-6">Modo de Preparo</h2>
+                <h2 class="font-display text-xl font-bold mb-6">Modo de Preparação</h2>
 
-                <div class="space-y-8">
-                    <!-- Step 1 -->
-                    <div class="flex gap-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">
-                            1</div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-2">Preparar as folhas</h3>
-                            <p class="text-gray-700">Lave bem as folhas de mandioca em água corrente. Retire os talos
-                                mais grossos e pique as folhas finamente. Se estiver usando folhas congeladas,
-                                descongele e escorra o excesso de água.</p>
-                            <div class="mt-3 bg-transparent rounded-lg overflow-hidden flex ">
-                                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80"
-                                    alt="Folhas de mandioca picadas"
-                                    class="w-full max-w-[400px] h-56 object-cover object-center rounded-lg">
+                <div class="space-y-4">
+
+                    @forelse ($recipe->steps as $item)
+                        <!-- Step -->
+
+                        <div class="bg-white rounded-xl shadow-sm p-4">
+                            <div class="flex items-start gap-3">
+                                <span
+                                    class="h-6 w-6 text-terra font-bold text-2xl flex-shrink-0">{{ $item->step_number }}º</span>
+                                <div>
+                                    <h3 class="font-medium text-gray-900 mb-1">PASSO</h3>
+                                    <p class="text-gray-700 text-sm">{{ $item->instruction }}.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Step 2 -->
-                    <div class="flex gap-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">
-                            2</div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-2">Preparar o tempero</h3>
-                            <p class="text-gray-700">Em uma panela grande, aqueça o óleo em fogo médio. Refogue a
-                                cebola e o alho até ficarem dourados e perfumados.</p>
-                            <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex justify-start">
-                                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80"
-                                    alt="Refogando cebola e alho"
-                                    class="w-full max-w-[400px] h-84 object-cover object-center rounded-lg">
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Step 3 -->
-                    <div class="flex gap-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">
-                            3</div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-2">Cozinhar as folhas</h3>
-                            <p class="text-gray-700">Adicione as folhas picadas à panela e mexa bem para misturar com o
-                                tempero. Deixe cozinhar por cerca de 10 minutos, mexendo ocasionalmente.</p>
-                            <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex justify-center">
-                                <img src="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=600&q=80"
-                                    alt="Cozinhando folhas de mandioca"
-                                    class="w-full max-w-[400px] h-56 object-cover object-center rounded-lg">
+                        {{-- <div class="flex gap-2">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">{{ $item->step_number }}</div>
+                            <div class="flex-1">
+                                <h3 class="font-medium text-gray-900 mb-2">Passo {{ $item->step_number }}</h3>
+                                <p class="text-gray-700">{{ $item->instruction }}</p>
+                                <div class="mt-3 bg-transparent rounded-lg overflow-hidden flex ">
+                                    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80"
+                                        alt="Folhas de mandioca picadas"
+                                        class="w-full max-w-[400px] h-56 object-cover object-center rounded-lg">
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> --}}
+                    @empty
+                    @endforelse
 
-                    <!-- Step 4 -->
-                    <div class="flex gap-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">
-                            4</div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-2">Adicionar amendoim e coco</h3>
-                            <p class="text-gray-700">Incorpore o amendoim moído e o leite de coco, mexendo bem. Tempere
-                                com sal e piri-piri a gosto. Reduza o fogo para baixo e deixe cozinhar por
-                                aproximadamente 1 hora, mexendo de vez em quando para não grudar no fundo da panela.</p>
-                            <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex justify-center">
-                                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80"
-                                    alt="Misturando ingredientes"
-                                    class="w-full max-w-[400px] h-56 object-cover object-center rounded-lg">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="flex gap-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">
-                            5</div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-2">Ajustar o tempero</h3>
-                            <p class="text-gray-700">Prove e ajuste o sal e o piri-piri se necessário. Se a mistura
-                                estiver muito grossa, pode adicionar um pouco de água quente.</p>
-                            <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex justify-center">
-                                <img src="https://images.unsplash.com/photo-1519864600265-abb23847ef2c?auto=format&fit=crop&w=600&q=80"
-                                    alt="Ajustando tempero"
-                                    class="w-full max-w-[400px] h-56 object-cover object-center rounded-lg">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 6 -->
-                    <div class="flex gap-4">
-                        <div
-                            class="flex-shrink-0 w-10 h-10 rounded-full bg-terra text-white flex items-center justify-center font-bold">
-                            6</div>
-                        <div class="flex-1">
-                            <h3 class="font-medium text-gray-900 mb-2">Servir</h3>
-                            <p class="text-gray-700">Sirva quente acompanhado de arroz branco e, se desejar, camarões
-                                grelhados. Tradicionalmente, a matapa tem uma consistência cremosa, mas não muito
-                                líquida.</p>
-                            <div class="mt-3 bg-gray-50 rounded-lg overflow-hidden flex justify-center">
-                                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80"
-                                    alt="Matapa pronta para servir"
-                                    class="w-full max-w-[400px] h-56 object-cover object-center rounded-lg">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -674,7 +601,7 @@
             <section id="tips" class="recipe-section hidden">
                 <h2 class="font-display text-xl font-bold mb-6">Dicas do Chef</h2>
 
-                <div class="space-y-6">
+                {{-- <div class="space-y-6">
                     <div class="bg-white rounded-xl shadow-sm p-4">
                         <div class="flex items-start gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-terra flex-shrink-0"
@@ -737,7 +664,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- Video Embed -->
                 <div class="mt-8 bg-white rounded-xl shadow-sm overflow-hidden">
@@ -758,242 +685,219 @@
             </section>
         </div>
 
+
+
+
         <!-- Related Recipes -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
             <h2 class="font-display text-2xl font-bold mb-6 px-4">Receitas Relacionadas</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Recipe Card 1 -->
-                <a href="#"
-                    class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div
-                        class="h-48 bg-[url('https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-medium">Frango à Zambeziana</h3>
-                            <span class="text-xs bg-folha/20 text-folha px-2 py-1 rounded-full">⭐ Popular</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>50 min</span>
-                        </div>
-                    </div>
-                </a>
+                <!-- Recipe Card -->
 
-                <!-- Recipe Card 2 -->
-                <a href="#"
-                    class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div
-                        class="h-48 bg-[url('https://images.unsplash.com/photo-1518779578993-ec3579fee39f?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-medium">Caril de Camarão</h3>
-                            <span class="text-xs bg-sol/20 text-sol px-2 py-1 rounded-full">🌶️ Picante</span>
+                @forelse ($relatedRecipes as $item)
+                    <a href="{{ route('explore.recipe', $item->id * now()->format('dmy')) }}"
+                        class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                        <div class="h-48 bg-cover bg-center"
+                            style="background-image: url('{{ asset("/files/$item->image") ?? asset('assets/images/no-image.png') }}');">
                         </div>
-                        <div class="flex items-center text-sm text-gray-600 gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>35 min</span>
-                        </div>
-                    </div>
-                </a>
+                        <div class="p-4">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-medium">{{ $item->title }}</h3>
+                                <span class="text-xs bg-folha/20 text-folha px-2 py-1 rounded-full">
+                                    @switch($item->level)
+                                        @case('low')
+                                            <span class="text-green-500">⭐</span>
+                                        @break
 
-                <!-- Recipe Card 3 -->
-                <a href="#"
-                    class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                    <div
-                        class="h-48 bg-[url('https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="font-medium">Xima com Feijão</h3>
-                            <span class="text-xs bg-oceano/20 text-oceano px-2 py-1 rounded-full">🥗 Vegano</span>
-                        </div>
-                        <div class="flex items-center text-sm text-gray-600 gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>1h 10min</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </section>
-    </main>
+                                        @case(2)
+                                            <span class="text-yellow-500">⭐️⭐️</span>
+                                        @break
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center">
-                        <span class="text-2xl">🌶️</span>
-                        <span class="ml-1 text-2xl font-bold">Sabores Moçambique</span>
+                                        @default
+                                            <span class="text-red-500">⭐️⭐️⭐️</span>
+                                    @endswitch
+                                </span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-600 gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{{ $item->created_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    </a>
+                    @empty
+                    @endforelse
+
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="md:col-span-2">
+                        <div class="flex items-center">
+                            <span class="text-2xl">🌶️</span>
+                            <span class="ml-1 text-2xl font-bold">Sabores Moçambique</span>
+                        </div>
+                        <p class="mt-4 text-gray-400">Preservando e compartilhando os sabores tradicionais de Moçambique.
+                            Receitas autênticas para todas as ocasiões.</p>
                     </div>
-                    <p class="mt-4 text-gray-400">Preservando e compartilhando os sabores tradicionais de Moçambique.
-                        Receitas autênticas para todas as ocasiões.</p>
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider">Explorar</h3>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Receitas</a>
+                            </li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Chefs</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white transition-colors">Ingredientes</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Técnicas</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold uppercase tracking-wider">Sobre</h3>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Nossa
+                                    História</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contribuir</a>
+                            </li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contato</a>
+                            </li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Termos</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider">Explorar</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Receitas</a>
-                        </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Chefs</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors">Ingredientes</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Técnicas</a>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider">Sobre</h3>
-                    <ul class="mt-4 space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Nossa
-                                História</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contribuir</a>
-                        </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contato</a>
-                        </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Termos</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">© 2023 Sabores Moçambique. Todos os direitos reservados.</p>
-                <div class="mt-4 md:mt-0 flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <span class="sr-only">Facebook</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <span class="sr-only">Instagram</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
-                        <span class="sr-only">YouTube</span>
-                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fill-rule="evenodd"
-                                d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </a>
+                <div class="mt-12 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">© 2023 Sabores Moçambique. Todos os direitos reservados.</p>
+                    <div class="mt-4 md:mt-0 flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <span class="sr-only">YouTube</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <!-- Floating Action Button -->
-    <button class="fab bg-terra text-white hover:bg-red-700" aria-label="Compartilhar receita">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-        </svg>
-    </button>
+        <!-- Floating Action Button -->
+        <button class="fab bg-terra text-white hover:bg-red-700" aria-label="Compartilhar receita">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+            </svg>
+        </button>
 
-    <!-- JavaScript -->
-    <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navBackdrop = document.getElementById('nav-backdrop');
+        <!-- JavaScript -->
+        <script>
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navBackdrop = document.getElementById('nav-backdrop');
 
-        mobileMenuButton.addEventListener('click', () => {
-            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
-            mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
-            mobileMenu.classList.toggle('hidden');
-            navBackdrop.classList.toggle('active');
-        });
-
-        navBackdrop.addEventListener('click', () => {
-            mobileMenuButton.setAttribute('aria-expanded', 'false');
-            mobileMenu.classList.add('hidden');
-            navBackdrop.classList.remove('active');
-        });
-
-        // Tab switching
-        const tabButtons = document.querySelectorAll('[data-tab]');
-        const recipeSections = document.querySelectorAll('.recipe-section');
-        const stepNavItems = document.querySelectorAll('.step-nav-item');
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const tabId = button.getAttribute('data-tab');
-
-                // Update active tab button
-                stepNavItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-                button.classList.add('active');
-
-                // Show corresponding section
-                recipeSections.forEach(section => {
-                    section.classList.add('hidden');
-                });
-                document.getElementById(tabId).classList.remove('hidden');
+            mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                navBackdrop.classList.toggle('active');
             });
-        });
 
-        // Checkbox animation
-        const checkboxes = document.querySelectorAll('.ingredient-item input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const label = this.nextElementSibling;
-                if (this.checked) {
-                    label.style.textDecoration = 'line-through';
-                    label.style.opacity = '0.7';
-                } else {
-                    label.style.textDecoration = 'none';
-                    label.style.opacity = '1';
-                }
+            navBackdrop.addEventListener('click', () => {
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                mobileMenu.classList.add('hidden');
+                navBackdrop.classList.remove('active');
             });
-        });
 
-        // Scroll to top button
-        const scrollToTop = document.createElement('button');
-        scrollToTop.innerHTML = `
+            // Tab switching
+            const tabButtons = document.querySelectorAll('[data-tab]');
+            const recipeSections = document.querySelectorAll('.recipe-section');
+            const stepNavItems = document.querySelectorAll('.step-nav-item');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+
+                    // Update active tab button
+                    stepNavItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    button.classList.add('active');
+
+                    // Show corresponding section
+                    recipeSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+
+            // Checkbox animation
+            const checkboxes = document.querySelectorAll('.ingredient-item input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const label = this.nextElementSibling;
+                    if (this.checked) {
+                        label.style.textDecoration = 'line-through';
+                        label.style.opacity = '0.7';
+                    } else {
+                        label.style.textDecoration = 'none';
+                        label.style.opacity = '1';
+                    }
+                });
+            });
+
+            // Scroll to top button
+            const scrollToTop = document.createElement('button');
+            scrollToTop.innerHTML = `
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
         `;
-        scrollToTop.className =
-            'fixed bottom-20 right-4 z-50 bg-white/90 p-2 rounded-full shadow-md hover:bg-white transition-colors hidden';
-        scrollToTop.setAttribute('aria-label', 'Voltar ao topo');
-        document.body.appendChild(scrollToTop);
+            scrollToTop.className =
+                'fixed bottom-20 right-4 z-50 bg-white/90 p-2 rounded-full shadow-md hover:bg-white transition-colors hidden';
+            scrollToTop.setAttribute('aria-label', 'Voltar ao topo');
+            document.body.appendChild(scrollToTop);
 
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTop.classList.remove('hidden');
-            } else {
-                scrollToTop.classList.add('hidden');
-            }
-        });
-
-        scrollToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollToTop.classList.remove('hidden');
+                } else {
+                    scrollToTop.classList.add('hidden');
+                }
             });
-        });
-    </script>
-</body>
 
-</html>
+            scrollToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        </script>
+    </body>
+
+    </html>

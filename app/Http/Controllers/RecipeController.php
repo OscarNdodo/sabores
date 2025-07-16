@@ -92,9 +92,57 @@ class RecipeController extends Controller
             return redirect()->route('explore')->withErrors(['error' => 'Receita não encontrada.']);
         }
 
+        $relatedRecipes = $this->getRelatedRecipes($recipe);
+
         return view('view', [
-            "recipe" => $recipe
+            "recipe" => $recipe,
+            "relatedRecipes" => $relatedRecipes
         ]);
+    }
+
+    protected function getRelatedRecipes(Recipe $recipe)
+    {
+        // 1. Por mesma categoria (mais simples)
+        $byCategory = Recipe::where('category', $recipe->category)
+            ->where('id', '!=', $recipe->id)
+            ->with(['user'])
+            ->limit(4)
+            ->get();
+
+
+        // 3. Por ingredientes similares (mais complexo)
+        $byIngredients = [];
+        if ($recipe->ingredients->isNotEmpty()) {
+            $ingredientNames = $recipe->ingredients->pluck('name');
+
+            $byIngredients = Recipe::whereHas('ingredients', function ($query) use ($ingredientNames) {
+                $query->whereIn('name', $ingredientNames);
+            })
+                ->where('id', '!=', $recipe->id)
+                ->with(['user'])
+                ->limit(4)
+                ->get();
+        }
+
+        // Combine todos os resultados, removendo duplicatas e a receita atual
+        $related = $byCategory
+            ->merge($byIngredients)
+            ->unique('id')
+            ->shuffle()
+            ->take(4); // Limita a 4 receitas relacionadas
+
+        // Se não encontrou o suficiente, complete com receitas populares
+        if ($related->count() < 3) {
+            $popular = Recipe::orderBy('created_at', 'desc')
+                ->where('id', '!=', $recipe->id)
+                ->with(['user'])
+                ->limit(3 - $related->count())
+                ->get();
+
+            $related = $related->merge($popular);
+        }
+
+        return $related;
     }
 
     public function aiGenerate(Request $request)

@@ -200,10 +200,10 @@
                         </div>
                     </div>
 
-                    <a href="/painel/u/devndodo"
+                    <a href="{{ route('login') }}"
                         class="ml-6 bg-terra text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
                         Partilhar Receita
-                </a>
+                    </a>
                 </div>
 
                 <div class="-mr-2 flex md:hidden">
@@ -259,8 +259,7 @@
                         <span class="text-oceano">histórias</span> moçambicanas
                     </h1>
                     <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-lg">
-                        Descubra a revolução gastronômica que está a redefinir a identidade culinária de Moçambique.
-                        Receitas autênticas, técnicas modernas.
+                        Receitas autênticas, técnicas modernas com ajuda da <span class="font-bold text-red-500">Inteligência Artificial</span> Integrada.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <a href="/explorar"
@@ -276,7 +275,7 @@
                 <div class="relative">
                     <div
                         class="relative z-10 w-full h-64 md:h-80 lg:h-96 bg-terra rounded-3xl overflow-hidden shadow-2xl group">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+                        <img src="{{ asset('files/' . $destaque1->image) ?? asset('assets/images/no-image.png') }}"
                             alt="Culinária Moçambicana"
                             class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent">
@@ -285,8 +284,11 @@
                             <div
                                 class="bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow">
                                 <p class="text-sm text-gray-700 font-medium">Receita em Destaque</p>
-                                <h3 class="font-display text-xl font-bold text-terra mt-1">Matapa Reimaginada</h3>
-                                <p class="text-xs text-gray-600">Chef Jamal Timbana • Maputo</p>
+                                <h3 class="font-display text-xl font-bold text-terra mt-1">{{ $destaque1->title }}</h3>
+                                <p class="text-xs text-gray-600 capitalize">
+                                    {{ $destaque1->user->created_at->diffForHumans() }} @if ($destaque1->user->location)
+                                        •
+                                    @endif {{ $destaque1->user->location }}</p>
                             </div>
                         </div>
                     </div>
@@ -308,7 +310,7 @@
                     <span class="text-terra">Caminhos</span> Gastronômicos
                 </h2>
                 <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                    Navegue pela diversidade culinária através de diferentes percursos de descoberta.
+                    Navegue pela diversidade culinária através de diferentes percursos de descoberta com nossa <span class="font-bold text-red-500">Inteligência Artificial</span> Integrada.
                 </p>
             </div>
 
@@ -382,7 +384,7 @@
                     <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-2">
                         <span class="text-terra">Tesouros</span> Culinários
                     </h2>
-                    <p class="text-lg text-gray-600">Receitas que definem a essência moçambicana</p>
+                    <p class="text-lg text-gray-600">Receitas que definem a essência moçambicana com ajuda da <span class="font-bold text-red-500">Inteligência Artificial</span> Integrada.</p>
                 </div>
                 <a href="/explorar"
                     class="mt-4 md:mt-0 flex items-center text-terra font-medium hover:underline group">
@@ -398,128 +400,71 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Receita 1 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover group">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80"
-                            alt="Matapa"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 left-4 bg-terra text-white px-2 py-1 rounded-full text-xs font-medium">
-                            ⭐ Clássico</div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/70 to-transparent">
-                        </div>
-                        <div class="absolute bottom-4 left-4 text-white font-medium">Maputo • 45 min</div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-xl font-bold text-gray-900">Matapa Gourmet</h3>
-                            <span class="bg-folha/20 text-folha px-2 py-1 rounded-full text-xs">Vegetariano</span>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4">Folhas de mandioca reinventadas com técnicas
-                            contemporâneas</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Chef Amina"
-                                    class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                <span class="text-xs text-gray-500">Chef Amina</span>
-                            </div>
-                            <button class="text-terra text-sm font-medium hover:underline flex items-center group">
-                                Ver receita
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Receita 2 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover group">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=600&q=80"
-                            alt="Camarão"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 left-4 bg-oceano text-white px-2 py-1 rounded-full text-xs font-medium">
-                            🌊 Costeiro</div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/70 to-transparent">
-                        </div>
-                        <div class="absolute bottom-4 left-4 text-white font-medium">Inhambane • 30 min</div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-xl font-bold text-gray-900">Camarão à Zambeziana</h3>
-                            <span class="bg-sol/20 text-sol px-2 py-1 rounded-full text-xs">Picante</span>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4">Camarões com leite de coco e piri-piri, uma explosão de
-                            sabores</p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Chef Carlos"
-                                    class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                <span class="text-xs text-gray-500">Chef Carlos</span>
-                            </div>
-                            <button class="text-terra text-sm font-medium hover:underline flex items-center group">
-                                Ver receita
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                @foreach ($recipes as $item)
+                    <!-- Receita-->
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover group">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="{{ asset('files/' . $item->image) ?? asset('assets/images/no-image.png') }}"
+                                alt="{{ $item->title }}"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4 text-white px-2 py-1 rounded-full text-xs font-medium">
+                                @switch($item->level)
+                                    @case('low')
+                                        ⭐
+                                    @break
 
-                <!-- Receita 3 -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md card-hover group">
-                    <div class="relative h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"
-                            alt="Sobremesa"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div
-                            class="absolute top-4 left-4 bg-sol text-white px-2 py-1 rounded-full text-xs font-medium">
-                            🍬 Doce</div>
-                        <div
-                            class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/70 to-transparent">
-                        </div>
-                        <div class="absolute bottom-4 left-4 text-white font-medium">Nampula • 60 min</div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-xl font-bold text-gray-900">Bolo de Caju Caramelizado</h3>
-                            <span class="bg-terra/20 text-terra px-2 py-1 rounded-full text-xs">Sobremesa</span>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4">Reinvenção do clássico com cajus locais e toques modernos
-                        </p>
-                        <div class="flex justify-between items-center">
-                            <div class="flex items-center">
-                                <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Chef Luísa"
-                                    class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                <span class="text-xs text-gray-500">Chef Luísa</span>
+                                    @case('medium')
+                                        ⭐⭐
+                                    @break
+
+                                    @case('high')
+                                        ⭐⭐⭐
+                                    @break
+
+                                    @default
+                                        N/A
+                                @endswitch
                             </div>
-                            <button class="text-terra text-sm font-medium hover:underline flex items-center group">
-                                Ver receita
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/70 to-transparent">
+                            </div>
+                            <div class="absolute bottom-4 left-4 text-white font-medium">
+                                {{ $item->user->location ?? '' }} @if ($item->user->location)
+                                    •
+                                @endif {{ $item->created_at->diffForHumans() }}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-xl font-bold text-gray-900">{{ $item->title }}</h3>
+                                <span
+                                    class="bg-folha/20 text-folha px-2 py-1 rounded-full text-xs">{{ $item->category }}</span>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">{{ $item->description }}</p>
+                            <div class="flex justify-between items-center">
+                                <div class="flex items-center">
+                                    <img src="{{ $item->user->profile_image ?? url('https://www.svgrepo.com/show/228291/user-profile.svg') }}"
+                                        alt="Chef Amina"
+                                        class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
+                                    <span class="text-xs text-gray-500">Chef
+                                        {{ $item->user->username ?? $item->user->name }}</span>
+                                </div>
+                                <a href="{{ route('explore.recipe', $item->id * now()->format('dmy')) }}"
+                                    class="text-terra text-sm font-medium hover:underline flex items-center group">
+                                    Ver receita
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform"
+                                        viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
@@ -535,38 +480,54 @@
                         <span
                             class="inline-block px-3 py-1 text-sm font-medium bg-terra text-white rounded-full mb-4">Destaque</span>
                         <h2 class="font-display text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                            <span class="text-terra">Galinha à</span> Zambeziana Reimaginada
+                            {{ $destaque2->title }}
                         </h2>
                         <p class="text-lg text-gray-600 mb-6">
-                            O clássico moçambicano revisitado pelo premiado Chef Jamal Timbana, combinando técnicas
-                            contemporâneas com ingredientes locais.
+                            {{ $destaque2->description }}
                         </p>
                         <div class="grid grid-cols-2 gap-4 mb-8">
                             <div class="bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors">
                                 <p class="text-sm text-gray-500">Tempo</p>
-                                <p class="font-medium">50 min</p>
+                                <p class="font-medium">{{ $destaque2->duration }}</p>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors">
                                 <p class="text-sm text-gray-500">Dificuldade</p>
-                                <p class="font-medium">Médio</p>
+                                <p class="font-medium">
+                                    @switch($destaque2->level)
+                                        @case('low')
+                                            ⭐ Fácil
+                                        @break
+
+                                        @case('medium')
+                                            ⭐⭐ Médio
+                                        @break
+
+                                        @case('high')
+                                            ⭐⭐⭐ Difícil
+                                        @break
+
+                                        @default
+                                            N/A
+                                    @endswitch
+                                </p>
                             </div>
                         </div>
-                        <a href="/explorar/receita"
+                        <a href="{{ route('explore.recipe', ['id' => $destaque2->id * now()->format('dmy')]) }}"
                             class="bg-terra text-white w-full justify-center px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg flex items-center transform hover:scale-105">
                             <span class="mr-2">👨‍🍳</span> Ver Receita Completa
                         </a>
                     </div>
                     <div class="md:w-1/2 relative">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80"
+                        <img src="{{ asset('files/' . $destaque2->image) ?? asset('assets/images/no-image.png') }}"
                             alt="Galinha à Zambeziana"
                             class="w-full h-full object-cover min-h-64 md:min-h-full group-hover:scale-105 transition-transform duration-500">
                         <div
                             class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-md flex items-center hover:shadow-lg transition-shadow">
-                            <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Chef Jamal"
-                                class="w-10 h-10 rounded-full mr-3 border-2 border-terra">
+                            <img src="{{ $destaque2->user->profile_image ?? url('https://www.svgrepo.com/show/228291/user-profile.svg') }}"
+                                alt="Chef Jamal" class="w-10 h-10 rounded-full mr-3 border-2 border-terra">
                             <div>
                                 <p class="text-xs text-gray-500">Receita por</p>
-                                <p class="font-medium text-terra">Chef Jamal Timbana</p>
+                                <p class="font-medium text-terra">Chef {{ $destaque2->user->username }}</p>
                             </div>
                         </div>
                     </div>

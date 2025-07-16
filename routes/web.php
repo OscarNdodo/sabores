@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthController::class, "index"])->name("welcome");
 
 Route::get('/cadastrar', function () {
     return view('account');

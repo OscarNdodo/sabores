@@ -2,11 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
+use App\Models\User;
+use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        $recipes = Recipe::with(['user']) // Carrega relações adicionais se necessário
+            ->withCount('views')          // Conta as visualizações
+            ->orderByDesc('views_count')   // Ordena por visualizações (descendente)
+            ->take(6)                     // Limita a 10 receitas
+            ->get();
+
+        $destaque1 = $recipes[0];
+        $destaque2 = $recipes[1];
+        // $destaque["user"] = User::where("");
+        // dd($destaque->user);
+
+        return view("welcome", [
+            "recipes" => $recipes,
+            "destaque1" => $destaque1,
+            "destaque2" => $destaque2,
+        ]);
+    }
+
+
     public function login(Request $request)
     {
         if ($request->isMethod('get')) {
@@ -41,10 +65,30 @@ class AuthController extends Controller
     {
         $user = Auth::user();
         $recipes = $user->recipes()->orderBy('created_at', 'desc')->paginate(9);
+        $views = 0;
+        foreach ($recipes as $item) {
+            $views += $item->views()->count();
+        }
+
+        $recent_recipes = $user->recipes()->orderBy('created_at', 'desc')->paginate(3);
+        $recent_views = [];
+
+        foreach ($recent_recipes as $item) {
+            $data = $item->views()->orderBy("created_at", "asc")->paginate(2);
+            foreach ($data as $i) {
+                $recent_views[] = $i;
+            }
+        }
+
+        // dd($recent_views);
+
         return view('panel', [
             "ia" => false,
             'ia_recipe' => [],
-            "recipes" => $recipes
+            "recipes" => $recipes,
+            "views" => $views,
+            "recent_recipes" => $recent_recipes,
+            "recent_views" => $recent_views
         ]);
     }
 
