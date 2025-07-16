@@ -42,10 +42,8 @@ class Recipe extends Model
         return $this->hasMany(Tip::class);
     }
 
-    public function isDraft()
+    public function views()
     {
-        return $this->status === 'draft';
+        return $this->hasMany(View::class);
     }
-
-  
 }

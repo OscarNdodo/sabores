@@ -26,16 +26,15 @@ Route::get('/cadastrar', function () {
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::get('/explorar', function () {
-    return view('explore');
-});
+Route::get('explorar', [RecipeController::class, 'explore'])->name('explore');
+Route::get('/explorar/receita/{id}', [RecipeController::class, 'show'])->name('explore.recipe');
 
 
-Route::get('explorar/receita', function () {
-    return view('view');
-});
 
 Route::middleware("auth")->prefix("painel/u/")->group(function () {
     Route::get("/", [AuthController::class, 'home'])->name("panel");
     Route::post("/receitas/criar", [RecipeController::class, 'store'])->name("panel.recipes.store");
+    Route::get("/receitas/criar/ia", [RecipeController::class, 'aiGenerate'])->name("panel.recipes.ai");
 });
+
+

@@ -107,8 +107,17 @@
             <p class="text-gray-600">Acesse sua conta para continuar</p>
         </div>
 
-        <div class="card p-6 sm:p-8">
-            <form class="space-y-6" method="POST" action="{{ route('login') }}">
+        <div class="card border-t border-red-{{ $errors->any() ? '500' : '200' }}">
+            @if ($errors->any())
+                <div class="mb-4 bg-red-500 text-red-100 px-6 py-3 overflow-hidden font-medium error">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form class="space-y-6 p-6 sm:p-8 " method="POST" action="{{ route('login') }}">
                 @csrf
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
@@ -149,7 +158,7 @@
                 </button>
             </form>
 
-            <div class="mt-6 text-center text-sm">
+            <div class="mt-6 text-center text-sm pb-4">
                 <p class="text-gray-600">Não tem uma conta? <a href="https://wa.me/258845512288"
                         class="link-primary">Contacte-nos</a></p>
             </div>

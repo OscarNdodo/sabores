@@ -398,442 +398,276 @@
         <section class="py-8 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
                 <div class="masonry-grid">
-                    <!-- Recipe 1 -->
-                    <a href="/explorar/receita" class="masonry-item block">
-                        <div class="recipe-card block bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">⭐ Clássico</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Matapa Tradicional</h3>
-                                    <span
-                                        class="bg-folha/20 text-folha px-2 py-1 rounded-full text-xs">Vegetariano</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Folhas de mandioca com amendoim e leite de coco
-                                </p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Chef Amina"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Amina</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Maputo</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    <!-- Recipe Item -->
+                    @forelse ($recipes as $item)
+                        <a href="{{ route('explore.recipe', $item->id * now()->format("dmy")) }}" class="masonry-item block">
+                            <div class="recipe-card block bg-white rounded-xl overflow-hidden shadow-md">
+                                <div class="recipe-card-image"
+                                    style="background-image: url('{{ asset("/files/$item->image") ?? asset('assets/images/no-image.png') }}');">
+                                    <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">
+                                        @switch($item->level)
+                                            @case('low')
+                                                <span class="text-green-500">⭐ Fácil</span>
+                                            @break
 
-                    <!-- Recipe 2 -->
-                    <a href="/explorar/receita" class="masonry-item block">
-                        <div class="recipe-card  bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🌊
-                                    Costeiro</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Camarão à Zambeziana</h3>
-                                    <span class="bg-sol/20 text-sol px-2 py-1 rounded-full text-xs">Picante</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Camarões grelhados com molho de piri-piri e coco
-                                </p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Chef Carlos"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Carlos</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Zambézia</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                                            @case(2)
+                                                <span class="text-yellow-500">⭐️⭐️ Médio</span>
+                                            @break
 
-                    <!-- Recipe 3 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🍬 Doce</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Bolo de Caju</h3>
-                                    <span
-                                        class="bg-terra/20 text-terra px-2 py-1 rounded-full text-xs">Sobremesa</span>
+                                            @default
+                                                <span class="text-red-500">⭐️⭐️⭐️ Difícil</span>
+                                        @endswitch
+                                    </span>
                                 </div>
-                                <p class="text-gray-600 text-sm mb-3">Delicioso bolo feito com cajus moçambicanos</p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Chef Luísa"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Luísa</span>
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="font-bold text-gray-900">{{ $item->title }}</h3>
+                                        <span
+                                            class="bg-folha/20 text-folha px-2 py-1 rounded-full text-xs">{{ $item->category }}</span>
                                     </div>
-                                    <span class="text-xs text-gray-500">Nampula</span>
+                                    <p class="text-gray-600 text-sm mb-3">{{ $item->description }}</p>
+                                    <div class="flex justify-between items-center overflow-auto">
+                                        <div class="flex items-center">
+                                            <img src="https://randomuser.me/api/portraits/women/42.jpg"
+                                                alt="Chef Amina"
+                                                class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
+                                            <span
+                                                class="text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">Chef
+                                                {{ $item->user->username ?? $item->user->name }}</span>
+                                        </div>
+                                        <span
+                                            class="text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap">{{ $item->created_at->diffForHumans() }}
+                                            {{ $item->user->location ? '| ' . $item->user->location : '' }} </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
+                        @empty
+                        @endforelse
+
                     </div>
 
-                    <!-- Recipe 4 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">✨ Fusão</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Frango com Amendoim</h3>
-                                    <span
-                                        class="bg-oceano/20 text-oceano px-2 py-1 rounded-full text-xs">Popular</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Combinação perfeita de sabores tradicionais</p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Chef Jamal"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Jamal</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Maputo</span>
+                    <!-- Load More Button -->
+                    <div class="text-center mt-12">
+                        <button
+                            class="bg-terra text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
+                            Carregar mais receitas
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Regional Highlights -->
+            <section class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                            <span class="text-terra">Sabores</span> Regionais
+                        </h2>
+                        <p class="text-gray-600">Descubra as especialidades de cada região de Moçambique</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div
+                                class="h-32 bg-[url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
+                                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                    <h3 class="text-white font-bold">Maputo</h3>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Recipe 5 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🌿
-                                    Tradicional</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Xiguinha</h3>
-                                    <span
-                                        class="bg-folha/20 text-folha px-2 py-1 rounded-full text-xs">Vegetariano</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Prato típico do norte feito com milho e feijão
-                                    nhemba</p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/24.jpg" alt="Chef Marta"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Marta</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Cabo Delgado</span>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div
+                                class="h-32 bg-[url('https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
+                                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                    <h3 class="text-white font-bold">Inhambane</h3>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Recipe 6 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🧑‍🍳 Chef</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Risoto de Marisco</h3>
-                                    <span
-                                        class="bg-oceano/20 text-oceano px-2 py-1 rounded-full text-xs">Marisco</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Fusão italiana com ingredientes moçambicanos</p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Chef Tiago"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Tiago</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Inhambane</span>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div
+                                class="h-32 bg-[url('https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
+                                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                    <h3 class="text-white font-bold">Nampula</h3>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Recipe 7 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🔥 Picante</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Piri-Piri Chicken</h3>
-                                    <span class="bg-terra/20 text-terra px-2 py-1 rounded-full text-xs">Famoso</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Frango grelhado com molho de piri-piri artesanal
-                                </p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/men/68.jpg" alt="Chef Rui"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Rui</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Gaza</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recipe 8 -->
-                    <div class="masonry-item">
-                        <div class="recipe-card bg-white rounded-xl overflow-hidden shadow-md">
-                            <div class="recipe-card-image"
-                                style="background-image: url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80')">
-                                <span class="recipe-badge px-3 py-1 rounded-full text-xs font-medium">🥗
-                                    Saudável</span>
-                            </div>
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-gray-900">Salada Tropical</h3>
-                                    <span
-                                        class="bg-folha/20 text-folha px-2 py-1 rounded-full text-xs">Vegetariano</span>
-                                </div>
-                                <p class="text-gray-600 text-sm mb-3">Mistura de frutas e vegetais com molho de
-                                    maracujá</p>
-                                <div class="flex justify-between items-center">
-                                    <div class="flex items-center">
-                                        <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Chef Sofia"
-                                            class="w-6 h-6 rounded-full mr-2 border-2 border-white shadow-sm">
-                                        <span class="text-xs text-gray-500">Chef Sofia</span>
-                                    </div>
-                                    <span class="text-xs text-gray-500">Sofala</span>
+                        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                            <div
+                                class="h-32 bg-[url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
+                                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                    <h3 class="text-white font-bold">Zambézia</h3>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
+        </main>
 
-                <!-- Load More Button -->
-                <div class="text-center mt-12">
-                    <button
-                        class="bg-terra text-white px-6 py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg">
-                        Carregar mais receitas
-                    </button>
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white pt-12 pb-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-4 text-terra">Sabores</h3>
+                        <p class="text-gray-400 text-sm">
+                            Celebrando a diversidade culinária de Moçambique.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Explorar</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Receitas</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Categorias</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Regiões</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Chefs</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Comunidade</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Fórum</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Eventos</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Desafios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Sobre</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Nossa
+                                    Missão</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Contactos</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Termos</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white text-sm transition-colors">Privacidade</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Regional Highlights -->
-        <section class="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-            <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="font-display text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                        <span class="text-terra">Sabores</span> Regionais
-                    </h2>
-                    <p class="text-gray-600">Descubra as especialidades de cada região de Moçambique</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <div
-                            class="h-32 bg-[url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
-                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                                <h3 class="text-white font-bold">Maputo</h3>
-                            </div>
+                <div class="border-t border-gray-800 pt-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="flex items-center mb-4 md:mb-0">
+                            <span class="text-2xl mr-2">🌶️</span>
+                            <span class="font-bold text-terra">Sabores Moçambique</span>
                         </div>
-                    </div>
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <div
-                            class="h-32 bg-[url('https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
-                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                                <h3 class="text-white font-bold">Inhambane</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <div
-                            class="h-32 bg-[url('https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
-                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                                <h3 class="text-white font-bold">Nampula</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                        <div
-                            class="h-32 bg-[url('https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=300&q=80')] bg-cover bg-center relative">
-                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                                <h3 class="text-white font-bold">Zambézia</h3>
-                            </div>
+                        <div class="text-gray-400 text-sm">
+                            © 2023 Sabores Moçambique. Todos direitos reservados.
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </footer>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white pt-12 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <h3 class="text-lg font-bold mb-4 text-terra">Sabores</h3>
-                    <p class="text-gray-400 text-sm">
-                        Celebrando a diversidade culinária de Moçambique.
-                    </p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Explorar</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Receitas</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Categorias</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Regiões</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Chefs</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Comunidade</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Fórum</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Eventos</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Desafios</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Sobre</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Nossa
-                                Missão</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Contactos</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Termos</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white text-sm transition-colors">Privacidade</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="flex items-center mb-4 md:mb-0">
-                        <span class="text-2xl mr-2">🌶️</span>
-                        <span class="font-bold text-terra">Sabores Moçambique</span>
-                    </div>
-                    <div class="text-gray-400 text-sm">
-                        © 2023 Sabores Moçambique. Todos direitos reservados.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+        <!-- Scripts -->
+        @vite('resources/js/app.js')
+        <script>
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-button').addEventListener('click', function() {
+                const menu = document.getElementById('mobile-menu');
+                const expanded = this.getAttribute('aria-expanded') === 'true';
 
-    <!-- Scripts -->
-    @vite('resources/js/app.js')
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            const expanded = this.getAttribute('aria-expanded') === 'true';
-
-            this.setAttribute('aria-expanded', !expanded);
-            menu.classList.toggle('hidden');
-        });
-
-        // Filter chips functionality
-        document.querySelectorAll('.filter-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
-                // Remove active class from all chips in the same container
-                this.parentNode.querySelectorAll('.filter-chip').forEach(c => {
-                    c.classList.remove('active');
-                });
-
-                // Add active class to clicked chip
-                this.classList.add('active');
+                this.setAttribute('aria-expanded', !expanded);
+                menu.classList.toggle('hidden');
             });
-        });
 
-        // Lazy loading for images
-        if ('loading' in HTMLImageElement.prototype) {
-            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-            lazyImages.forEach(img => {
-                img.src = img.dataset.src;
-            });
-        } else {
-            // Fallback for browsers that don't support lazy loading
-            const script = document.createElement('script');
-            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-            script.async = true;
-            document.body.appendChild(script);
-        }
+            // Filter chips functionality
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.addEventListener('click', function() {
+                    // Remove active class from all chips in the same container
+                    this.parentNode.querySelectorAll('.filter-chip').forEach(c => {
+                        c.classList.remove('active');
+                    });
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+                    // Add active class to clicked chip
+                    this.classList.add('active');
                 });
             });
-        });
 
-        // Recipe card hover effects for touch devices
-        function setupCardHover() {
-            const cards = document.querySelectorAll('.recipe-card');
-            cards.forEach(card => {
-                card.addEventListener('touchstart', function() {
-                    this.classList.add('hover');
-                }, {
-                    passive: true
+            // Lazy loading for images
+            if ('loading' in HTMLImageElement.prototype) {
+                const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+                lazyImages.forEach(img => {
+                    img.src = img.dataset.src;
                 });
+            } else {
+                // Fallback for browsers that don't support lazy loading
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+                script.async = true;
+                document.body.appendChild(script);
+            }
 
-                card.addEventListener('touchend', function() {
-                    setTimeout(() => {
-                        this.classList.remove('hover');
-                    }, 100);
-                }, {
-                    passive: true
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
                 });
             });
-        }
 
-        setupCardHover();
+            // Recipe card hover effects for touch devices
+            function setupCardHover() {
+                const cards = document.querySelectorAll('.recipe-card');
+                cards.forEach(card => {
+                    card.addEventListener('touchstart', function() {
+                        this.classList.add('hover');
+                    }, {
+                        passive: true
+                    });
 
-        // Load more recipes functionality
-        document.querySelector('button[aria-label="Carregar mais receitas"]').addEventListener('click', function() {
-            this.textContent = 'Carregando...';
-            this.disabled = true;
-
-            // Simulate API call
-            setTimeout(() => {
-                // In a real app, you would fetch more recipes here
-                const masonryGrid = document.querySelector('.masonry-grid');
-
-                // Clone existing recipes to simulate new content
-                const newRecipes = [];
-                document.querySelectorAll('.masonry-item').forEach((item, index) => {
-                    if (index < 4) { // Only clone first 4 recipes
-                        const clone = item.cloneNode(true);
-                        clone.classList.add('animate-fade-in');
-                        newRecipes.push(clone);
-                    }
+                    card.addEventListener('touchend', function() {
+                        setTimeout(() => {
+                            this.classList.remove('hover');
+                        }, 100);
+                    }, {
+                        passive: true
+                    });
                 });
+            }
 
-                // Append new recipes
-                newRecipes.forEach(recipe => {
-                    masonryGrid.appendChild(recipe);
-                });
+            setupCardHover();
 
-                this.textContent = 'Carregar mais receitas';
-                this.disabled = false;
-            }, 1000);
-        });
-    </script>
-</body>
+            // Load more recipes functionality
+            document.querySelector('button[aria-label="Carregar mais receitas"]').addEventListener('click', function() {
+                this.textContent = 'Carregando...';
+                this.disabled = true;
 
-</html>
+                // Simulate API call
+                setTimeout(() => {
+                    // In a real app, you would fetch more recipes here
+                    const masonryGrid = document.querySelector('.masonry-grid');
+
+                    // Clone existing recipes to simulate new content
+                    const newRecipes = [];
+                    document.querySelectorAll('.masonry-item').forEach((item, index) => {
+                        if (index < 4) { // Only clone first 4 recipes
+                            const clone = item.cloneNode(true);
+                            clone.classList.add('animate-fade-in');
+                            newRecipes.push(clone);
+                        }
+                    });
+
+                    // Append new recipes
+                    newRecipes.forEach(recipe => {
+                        masonryGrid.appendChild(recipe);
+                    });
+
+                    this.textContent = 'Carregar mais receitas';
+                    this.disabled = false;
+                }, 1000);
+            });
+        </script>
+    </body>
+
+    </html>

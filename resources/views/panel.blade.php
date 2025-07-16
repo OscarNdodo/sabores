@@ -149,27 +149,7 @@
             color: white;
         }
 
-        /* Notificações */
-        .notification {
-            animation: slideIn 0.3s ease forwards, fadeIn 0.3s ease forwards;
-        }
-
-        /* Loader */
-        .loader {
-            border-top-color: var(--terra);
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
+       
         /* Responsivo */
         @media (max-width: 767px) {
             .tab-nav {
@@ -256,6 +236,97 @@
 
         #mobile-menu.active {
             transform: translateX(0);
+        }
+
+
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* IA thiking */ /* Animação da CPU */
+    .cpu-animation {
+        animation: pulse 1.5s infinite ease-in-out;
+    }
+    
+    /* Animação das linhas de processamento */
+    .processing-1 {
+        animation: processingAnim 2s infinite 0.1s;
+    }
+    .processing-2 {
+        animation: processingAnim 2s infinite 0.3s;
+    }
+    .processing-3 {
+        animation: processingAnim 2s infinite 0.5s;
+    }
+    .processing-4 {
+        animation: processingAnim 2s infinite 0.2s;
+    }
+    .processing-5 {
+        animation: processingAnim 2s infinite 0.4s;
+    }
+    .processing-6 {
+        animation: processingAnim 2s infinite 0.6s;
+    }
+    
+    /* Animação dos circuitos internos */
+    .circuit-1, .circuit-5 {
+        animation: circuitAnim 1.5s infinite;
+    }
+    .circuit-2, .circuit-6 {
+        animation: circuitAnim 1.5s infinite 0.2s;
+    }
+    .circuit-3, .circuit-7 {
+        animation: circuitAnim 1.5s infinite 0.4s;
+    }
+    .circuit-4, .circuit-8 {
+        animation: circuitAnim 1.5s infinite 0.6s;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.9; }
+        50% { transform: scale(1.05); opacity: 1; }
+    }
+    
+    @keyframes processingAnim {
+        0%, 100% { opacity: 0.3; stroke-width: 1; }
+        50% { opacity: 1; stroke-width: 1.5; }
+    }
+    
+    @keyframes circuitAnim {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.8; }
+    }
+
+        /* Animação da barra de progresso */
+        .ai-progress {
+            animation: progressAnim 3s infinite ease-in-out;
+        }
+
+        @keyframes progressAnim {
+            0% {
+                width: 0%;
+            }
+
+            50% {
+                width: 80%;
+            }
+
+            100% {
+                width: 100%;
+            }
         }
     </style>
 
@@ -395,6 +466,74 @@
 
         <!-- Dashboard Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+            <button id="generate-ai-recipe-btn"
+                class="w-full flex items-center justify-center space-x-2 border rounded-md py-3 px-4 text-sm font-medium transition border-red-300 hover:scale-105 hover:opacity-80 active:scale-95 bg-gradient-to-r from-red-500 to-yellow-500 mb-6 text-white hover:text-white/90">
+                <img src="https://www.svgrepo.com/show/200720/cpu-processor.svg" class="h-8 w-8">
+                <span>Gere uma receita com nossa IA</span>
+            </button>
+
+            {{-- Modal pata IA --}}
+            <div id="ai-recipe-modal"
+                class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
+                <div class="bg-white rounded-xl shadow-lg w-full max-w-sm animate-fadeIn">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-gray-900">Gerar Receita com IA</h3>
+                            <button id="close-ai-modal" class="text-gray-400 hover:text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <form id="generate-recipe-form" class="space-y-4" method="get" action="{{ route('panel.recipes.ai') }}">
+
+                            <div>
+                                <label for="ai-recipe-title" class="block text-sm font-medium text-gray-700 mb-1">
+                                    O que deseja cozinhar ?
+                                </label>
+                                <input type="text" name="title" id="ai-recipe-title"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-terra focus:border-terra transition"
+                                    placeholder="Ex: Folhas de mandioca com camarão e leite de coco">
+                                <p class="mt-1 text-xs text-gray-500">
+                                    Simplifique a receita para melhor resultados.
+                                </p>
+                            </div>
+
+                            <div class="pt-2">
+                                <button id="generate-recipe-btn" type="submit"
+                                    class="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-red-500 to-yellow-500 text-white py-3 px-4 rounded-lg font-medium hover:opacity-90 transition">
+                                    <img src="https://www.svgrepo.com/show/200720/cpu-processor.svg" class="h-5 w-5">
+                                    <span>Gerar Receita</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- <div class="w-screen h-screen fixed top-0 left-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center">
+                <form action="">
+                    <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
+                        <h2 class="text-xl font-bold mb-4">Geração de Receita</h2>
+                        <p class="text-gray-600 mb-4">Aguarde enquanto nossa IA gera uma receita deliciosa para você!</p>
+                        <div class="flex items-center justify-between">
+                            <button type="button" id="cancel-generate-btn"
+                                class="btn-terra bg-red-500 text-white hover:bg-red-600 transition-colors px-4 py-2 rounded-md">
+                                Cancelar
+                            </button>
+                            <button type="submit"
+                                class="btn-terra bg-green-500 text-white hover:bg-green-600 transition-colors px-4 py-2 rounded-md">
+                                Continuar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div> --}}
             <!-- Dashboard Tab -->
             <div id="dashboard" class="tab-content active">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 dashboard-grid">
@@ -532,65 +671,64 @@
             <div id="recipes" class="tab-content">
                 <div class="flex justify-between items-center mb-6 mobile-flex-col gap-4">
                     <h2 class="font-display text-xl font-bold">Minhas Receitas</h2>
-                    <button id="new-recipe-card-btn-red" class="btn-terra px-4 py-2 rounded-full text-sm font-medium">
-                        + Adicionar Receita
-                    </button>
+
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Recipe Card -->
-                    
+
 
                     @forelse ($recipes as $item)
                         <div class="dashboard-card bg-white rounded-xl shadow-sm overflow-hidden hover-grow">
-                        <div
-                            class="relative h-48 bg-[url('{{ asset('public'. $item->image) ?? asset('assets/img/no-image.png') }}')] bg-cover bg-center">
-                            <div class="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
-                                <button class="text-terra hover:text-red-700 p-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-medium">{{ $item->name }}</h3>
-                                <span class="text-xs bg-folha/20 text-folha px-2 py-1 rounded-full">Publicada</span>
-                            </div>
-                            <p class="text-sm text-gray-600 mb-3">{{ $item->description }}</p>
-                            <div class="flex justify-between text-sm text-gray-500">
-                                <span>{{ $item->created_at->format('d/m/Y') }}</span>
-                                <div class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                    <span>156</span>
+                            <div class="relative h-48  bg-cover bg-center">
+                                <img src="{{ asset('files/' . $item->image) ?? asset('assets/img/no-image.png') }}"
+                                    class="object-cover w-full h-full" alt="{{ $item->title }}">
+                                <div class="absolute top-2 right-2 bg-white/90 rounded-full p-1 shadow-sm">
+                                    <button class="text-terra hover:text-red-700 p-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-medium">{{ $item->title }}</h3>
+                                    <span
+                                        class="text-xs bg-folha/20 text-folha px-2 py-1 rounded-full">Publicada</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">{{ $item->description }}</p>
+                                <div class="flex justify-between text-sm text-gray-500">
+                                    <span>{{ $item->created_at->format('d/m/Y') }}</span>
+                                    <div class="flex items-center gap-1">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
+                                        <span>156</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-t border-gray-200 px-4 py-2 flex justify-between">
+                                <button class="text-terra text-sm font-medium hover:underline">Editar</button>
+                                <button class="text-gray-500 text-sm font-medium hover:underline">Estatísticas</button>
+                            </div>
                         </div>
-                        <div class="border-t border-gray-200 px-4 py-2 flex justify-between">
-                            <button class="text-terra text-sm font-medium hover:underline">Editar</button>
-                            <button class="text-gray-500 text-sm font-medium hover:underline">Estatísticas</button>
-                        </div>
-                    </div>
                     @empty
-                        
                     @endforelse
 
-                   
+
 
                     <!-- Add New Recipe Card -->
                     <div
                         class="dashboard-card bg-white rounded-xl shadow-sm overflow-hidden border-2 border-dashed border-gray-300 hover:border-terra transition-colors flex items-center justify-center hover-grow">
                         <button id="new-recipe-card-btn"
-                            class="text-center p-6 w-full h-full flex flex-col items-center justify-center text-terra hover:text-red-700">
+                            class="text-center p-6 w-full h-full md:py-20 flex flex-col items-center justify-center text-terra hover:text-red-700">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -602,8 +740,9 @@
                 </div>
             </div>
 
+            {{-- @dd($ia_recipe) --}}
             <!-- Recipe Form (hidden by default) -->
-            <div id="recipe-form" class="hidden">
+            <div id="recipe-form" @if ($ia == false) class="hidden" @endif>
                 <div class="bg-white rounded-xl shadow-sm p-6 mb-8 mt-10">
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="font-display text-xl font-bold">Nova Receita</h2>
@@ -616,15 +755,179 @@
                         </button>
                     </div>
 
-                    <form id="recipe-form-data" class="recipe-form space-y-6" method="POST" action="{{ route('panel.recipes.store') }}" enctype="multipart/form-data">
+                    <form id="recipe-form-data" class="recipe-form space-y-6" method="POST"
+                        action="{{ route('panel.recipes.store') }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <label for="recipe-title" class="block text-sm font-medium text-gray-700 mb-1">Título
                                     da Receita</label>
-                                <input type="text" id="recipe-title" name="title"
-                                    placeholder="Ex: Matapa Tradicional" required>
+
+                                @if ($ia)
+                                    <input type="text" id="recipe-title" name="title"
+                                        placeholder="Ex: Matapa Tradicional" value="{{ $ia_recipe['title'] ?? '' }}"
+                                        required>
+                                @else
+                                    <input type="text" id="recipe-title" name="title"
+                                        placeholder="Ex: Matapa Tradicional" required>
+                                @endif
                             </div>
+
+                            <div>
+                                <label for="recipe-time" class="block text-sm font-medium text-gray-700 mb-1">Tempo de
+                                    Preparo</label>
+                                @if ($ia)
+                                    <input type="text" id="recipe-time" name="duration"
+                                        value="{{ $ia_recipe['duracao'] ?? '' }}" placeholder="Ex: 1h 30min">
+                                @else
+                                    <input type="text" id="recipe-time" name="duration"
+                                        placeholder="Ex: 1h 30min">
+                                @endif
+                            </div>
+                            <div>
+                                <label for="recipe-difficulty"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Dificuldade</label>
+                                <select id="recipe-difficulty" name="level">
+                                    <option value="">Selecione</option>
+
+                                    @if ($ia && isset($ia_recipe['level']))
+                                        <option @if ($ia_recipe['level'] == 'low') selected @endif value="low">Fácil
+                                        </option>
+                                        <option @if ($ia_recipe['level'] == 'medium') selected @endif value="medium">Médio
+                                        </option>
+                                        <option @if ($ia_recipe['level'] == 'high') selected @endif value="high">
+                                            Difícil</option>
+                                    @else
+                                        <option value="low">Fácil</option>
+                                        <option value="medium">Médio</option>
+                                        <option value="high">Difícil</option>
+                                    @endif
+
+                                </select>
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label for="recipe-description"
+                                    class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
+                                @if ($ia)
+                                    <textarea id="recipe-description" name="description" rows="3" placeholder="Descreva sua receita..." required>{{ $ia_recipe['descricao'] }}</textarea>
+                                @else
+                                    <textarea id="recipe-description" name="description" rows="3" placeholder="Descreva sua receita..." required></textarea>
+                                @endif
+                            </div>
+
+                        </div>
+
+                        <div id="recipe-ingredients" class="space-y-4 mt-5 border-b border-gray-200 pb-5">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ingredientes</label>
+                            <div id="ingredients-container" class="space-y-2">
+                                @if ($ia)
+                                    @foreach ($ia_recipe['ingredientes'] as $key => $item)
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm text-gray-500">{{ $key + 1 }}</span>
+                                            <input type="text" name="item-{{ $key + 1 }}"
+                                                class="flex-1 first-letter:capitalize"
+                                                placeholder="Ex: 1 colheres de óleo" value="{{ $item }}">
+                                            <button type="button"
+                                                class="text-terra hover:text-red-700 remove-ingredient">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div id="ingredients-container" class="space-y-2">
+                                        <div class="flex items-center gap-2">
+                                            <span class="text-sm text-gray-500">1</span>
+                                            <input type="text" name="item-1"
+                                                class="flex-1 first-letter:capitalize"
+                                                placeholder="Ex: 1 colheres de óleo">
+                                            <button type="button"
+                                                class="text-terra hover:text-red-700 remove-ingredient">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                            <button type="button" id="add-ingredient"
+                                class="mt-2 text-sm text-terra hover:underline flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                Adicionar ingrediente
+                            </button>
+                        </div>
+
+                        <div id="recipe-instructions" class="space-y-4 mt-5">
+                            <label
+                                class="block text-sm font-medium text-gray-700 my-5 border-b border-gray-200 pb-5">Modo
+                                de Preparo</label>
+                            <div id="instructions-container" class="space-y-2">
+                                @if ($ia)
+                                    @foreach ($ia_recipe['preparo'] as $key => $item)
+                                        <div class="flex items-start gap-2">
+                                            <span class="mt-1 text-sm text-gray-500">{{ $key + 1 }}.</span>
+                                            <textarea rows="2" name="step-{{ $key + 1 }}" class="flex-1 first-letter:capitalize"
+                                                placeholder="Ex: Corte os vegetais em cubos pequenos">{{ $item }}</textarea>
+                                            <button type="button"
+                                                class="text-terra hover:text-red-700 remove-instruction mt-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="flex items-start gap-2">
+                                        <span class="mt-1 text-sm text-gray-500">1.</span>
+                                        <textarea rows="2" name="step-1" class="flex-1 first-letter:capitalize"
+                                            placeholder="Ex: Corte os vegetais em cubos pequenos"></textarea>
+                                        <button type="button"
+                                            class="text-terra hover:text-red-700 remove-instruction mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                            <button type="button" id="add-instruction"
+                                class="mt-2 text-sm text-terra hover:underline flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                Adicionar passo
+                            </button>
+                        </div>
+
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="recipe-category"
                                     class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
@@ -642,26 +945,6 @@
                                     <option value="Outro">Outro</option>
                                 </select>
                             </div>
-                        </div>
-
-                   
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label for="recipe-time" class="block text-sm font-medium text-gray-700 mb-1">Tempo de
-                                    Preparo</label>
-                                <input type="text" id="recipe-time" name="duration" placeholder="Ex: 1h 30min" required>
-                            </div>
-                            <div>
-                                <label for="recipe-difficulty"
-                                    class="block text-sm font-medium text-gray-700 mb-1">Dificuldade</label>
-                                <select id="recipe-difficulty" name="level" required>
-                                    <option value="">Selecione</option>
-                                    <option value="low">Fácil</option>
-                                    <option value="medium">Médio</option>
-                                    <option value="high">Difícil</option>
-                                </select>
-                            </div>
                             <div>
                                 <label for="recipe-type"
                                     class="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
@@ -677,72 +960,6 @@
                                     <option value="Outro">Outro</option>
                                 </select>
                             </div>
-                        </div>
-
-                            <div class="grid grid-cols-1 gap-6">
-                           <div>
-                             <label for="recipe-description"
-                                class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-                            <textarea id="recipe-description" name="description" rows="3" placeholder="Descreva sua receita..." required></textarea>
-                           </div>
-                           <div>
-                             <label for="recipe-link"
-                                class="block text-sm font-medium text-gray-700 mb-1">Link de Tutorial</label>
-                            <input id="recipe-link" name="youtube_video" type="text" placeholder="ex. https://www.youtube.com/watch?v=12345" required>
-                           </div>
-                        </div>
-
-                        <div id="recipe-ingredients" class="space-y-4 mt-5 border-b border-gray-200 pb-5">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Ingredientes</label>
-                            <div id="ingredients-container" class="space-y-2">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-sm text-gray-500">1</span>
-                                    <input type="text" name="item-1" class="flex-1" placeholder="Ex: 1 colheres de óleo">
-                                    <button type="button"  class="text-terra hover:text-red-700 remove-ingredient">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="button" id="add-ingredient"
-                                class="mt-2 text-sm text-terra hover:underline flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                </svg>
-                                Adicionar ingrediente
-                            </button>
-                        </div>
-
-                        <div id="recipe-instructions" class="space-y-4 mt-5">
-                            <label class="block text-sm font-medium text-gray-700 my-5 border-b border-gray-200 pb-5">Modo de Preparo</label>
-                            <div id="instructions-container" class="space-y-2">
-                                <div class="flex items-start gap-2">
-                                    <span class="mt-1 text-sm text-gray-500">1.</span>
-                                    <textarea rows="2" name="step-1" class="flex-1" placeholder="Ex: Corte os vegetais em cubos pequenos"></textarea>
-                                    <button type="button"
-                                        class="text-terra hover:text-red-700 remove-instruction mt-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <button type="button" id="add-instruction"
-                                class="mt-2 text-sm text-terra hover:underline flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                </svg>
-                                Adicionar passo
-                            </button>
                         </div>
 
                         <div class="mt-6 border-b border-gray-200 pb-5">
@@ -768,6 +985,15 @@
                             </div>
                         </div>
 
+
+                        <div class="grid grid-cols-1 gap-6">
+                            <div>
+                                <label for="recipe-link" class="block text-sm font-medium text-gray-700 mb-1">Link de
+                                    Tutorial</label>
+                                <input id="recipe-link" name="youtube_video" type="text"
+                                    placeholder="ex. https://www.youtube.com/watch?v=12345">
+                            </div>
+                        </div>
                         <div class="pt-4 border-t border-gray-200 flex justify-end space-x-3">
                             <button type="button" id="cancel-recipe-form"
                                 class="btn-outline-terra px-4 py-2 rounded-full text-sm font-medium">
@@ -987,6 +1213,39 @@
                 </div>
             </div>
         </div>
+
+
+
+
+    {{-- IA Thinking --}}
+    <div id="ai-loading"
+        class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/30 bg-opacity-50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-sm p-6 text-center">
+            <!-- CPU animado -->
+            <div class="cpu-animation mx-auto mb-6 w-16 h-16 relative w-full flex items-center justify-center">
+                <img src="https://www.svgrepo.com/show/200720/cpu-processor.svg" class="h-full w-full">
+            </div>
+
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Processando...</h3>
+            <p id="ai-tip" class="text-sm text-gray-600 mb-4">Buscando inspiração em receitas tradicionais
+                moçambicanas...</p>
+
+            <!-- Barra de progresso animada -->
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div class="ai-progress bg-gradient-to-r from-red-500 to-yellow-500 h-2.5 rounded-full"
+                    style="width: 0%"></div>
+            </div>
+
+            <!-- Dicas aleatórias -->
+            <div class="mt-4 text-xs text-gray-500 italic">
+                <p class="">Aguarde, enquanto criamos uma receita incrível para você</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
     </main>
 
     <!-- Footer -->
@@ -1022,6 +1281,10 @@
         </div>
     </footer>
 
+
+
+
+    <script src="{{ asset('assets/js/ia.js') }}"></script>
     <script>
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -1123,13 +1386,9 @@
 
 
 
-
         // Forms
         //OPEN FORM
         document.getElementById("new-recipe-card-btn").addEventListener("click", function() {
-            document.getElementById("recipe-form").classList.remove("hidden");
-        });
-        document.getElementById("new-recipe-card-btn-red").addEventListener("click", function() {
             document.getElementById("recipe-form").classList.remove("hidden");
         });
         //CLOSE FORM
@@ -1220,6 +1479,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

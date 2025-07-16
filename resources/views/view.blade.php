@@ -231,7 +231,7 @@
 </head>
 
 <body class="antialiased">
-     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm" aria-label="Navegação principal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
@@ -339,47 +339,66 @@
         <!-- Recipe Header -->
         <header class="recipe-header relative">
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20 z-10"></div>
-            <div
-                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center">
+            <div style="background-image: url('{{ asset("/files/$recipe->image") ?? asset('assets/images/no-image.png') }}');"
+                class="absolute inset-0 bg-cover bg-center">
             </div>
 
             <div class="relative z-20 h-full flex flex-col justify-end p-6">
                 <div class="max-w-3xl mx-auto w-full">
                     <div class="flex items-center gap-2 mb-4">
                         <span
-                            class="bg-folha/20 text-folha px-3 py-1 rounded-full text-xs font-medium">Vegetariano</span>
-                        <span class="bg-white/90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">⭐
-                            Clássico</span>
+                            class="bg-folha/20 text-folha px-3 py-1 rounded-full text-xs font-medium">{{ $recipe->type ?? 'Sem tipo' }}</span>
+                        <span class="bg-white/90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
+                            {{ $recipe->category->name ?? 'Sem categoria' }}</span>
+                        </span>
                     </div>
 
-                    <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-2">Matapa Tradicional</h1>
-                    <p class="text-white/90 mb-4">Folhas de mandioca com amendoim e leite de coco - um prato emblemático
-                        de Moçambique</p>
+                    <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-2">
+                        {{ $recipe->title ?? 'Sem título' }}</h1>
+                    <p class="text-white/90 mb-4">{{ $recipe->description ?? 'Sem descrição' }}</p>
 
                     <div class="flex flex-wrap gap-4 text-white/90 text-sm">
                         <div class="recipe-meta-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <span>1h 30min</span>
-                        </div>
-                        <div class="recipe-meta-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                            </svg>
-                            <span>Médio</span>
+                            <span>{{ $recipe->duration ?? 'Sem duração' }}</span>
                         </div>
                         <div class="recipe-meta-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
                             </svg>
-                            <span>4 porções</span>
+                            <span>
+                                @switch($recipe->level)
+                                    @case('low')
+                                        ⭐ Fácil
+                                    @break
+
+                                    @case('medium')
+                                        ⭐⭐ Médio
+                                    @break
+
+                                    @case('high')
+                                        ⭐⭐⭐ Difícil
+                                    @break
+
+                                    @default
+                                        N/A
+                                @endswitch
+                            </span>
+                        </div>
+                        <div class="recipe-meta-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 17l4-4-4-4m8 8V7" />
+                            </svg>
+                            <span>{{ $recipe->steps->count() > 10 ? $recipe->steps->count() : '0' . $recipe->steps->count() }}
+                                Passos</span>
                         </div>
                     </div>
                 </div>
@@ -416,13 +435,14 @@
                         <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Chef Amina"
                             class="w-12 h-12 rounded-full border-2 border-white shadow-md">
                         <div>
-                            <h3 class="font-medium">Chef Amina</h3>
-                            <p class="text-gray-600 text-sm">Especialista em culinária tradicional</p>
+                            <h3 class="font-medium">Chef {{ $recipe->user->username ?? $recipe->user->name }}</h3>
+                            <p class="text-gray-600 text-sm">{{ $recipe->user->bio ?? 'Sem descrição de biografia' }}
+                            </p>
                         </div>
                     </div>
-                    <div class="text-right">
+                    <div class="text-right ml-6">
                         <p class="text-sm text-gray-600">Origem</p>
-                        <p class="font-medium">Maputo</p>
+                        <p class="font-medium">{{ $recipe->user->location ?? 'Desconhecida' }}</p>
                     </div>
                 </div>
             </div>
@@ -450,44 +470,21 @@
                     <h2 class="font-display text-xl font-bold mb-4">Ingredientes</h2>
 
                     <div class="mb-6">
-                        <h3 class="font-medium text-gray-900 mb-3">Para a Matapa</h3>
+                        <h3 class="font-medium text-gray-900 mb-3">Para {{ $recipe->title }}</h3>
                         <ul class="space-y-3">
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing1">
-                                <label for="ing1">1 kg de folhas de mandioca frescas (ou congeladas)</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing2">
-                                <label for="ing2">2 xícaras de amendoim torrado e moído</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing3">
-                                <label for="ing3">2 latas de leite de coco (400ml cada)</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing4">
-                                <label for="ing4">1 cebola grande picada</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing5">
-                                <label for="ing5">3 dentes de alho picados</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing6">
-                                <label for="ing6">2 colheres de sopa de óleo</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing7">
-                                <label for="ing7">Sal a gosto</label>
-                            </li>
-                            <li class="ingredient-item">
-                                <input type="checkbox" id="ing8">
-                                <label for="ing8">Piri-piri a gosto (opcional)</label>
-                            </li>
+
+                            @forelse ($recipe->ingredients as $item)
+                                <li class="ingredient-item">
+                                    <input type="checkbox" id="ing{{ $loop->index + 1 }}">
+                                    <label for="ing{{ $loop->index + 1 }}">{{ $item->name }}</label>
+                                </li>
+                            @empty
+                                <li class="ingredient-item">Nenhum ingrediente encontrado.</li>
+                            @endforelse
                         </ul>
                     </div>
 
-                    <div>
+                    {{-- <div>
                         <h3 class="font-medium text-gray-900 mb-3">Para Acompanhar</h3>
                         <ul class="space-y-3">
                             <li class="ingredient-item">
@@ -499,7 +496,7 @@
                                 <label for="ing10">Camarões grelhados (opcional)</label>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Cooking Tools -->
@@ -749,7 +746,11 @@
                     </div>
                     <div class="aspect-w-16 aspect-h-9 bg-black">
                         <div class="flex items-center justify-center h-full bg-gray-100 text-gray-400">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/U3xpEBeRTlg?si=OlHdBPvsFRJtLBHV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            <iframe width="560" height="315"
+                                src="https://www.youtube.com/embed/U3xpEBeRTlg?si=OlHdBPvsFRJtLBHV"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                             <span class="sr-only">Vídeo tutorial</span>
                         </div>
                     </div>

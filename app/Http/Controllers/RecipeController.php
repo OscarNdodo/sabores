@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 
 class RecipeController extends Controller
@@ -29,6 +31,7 @@ class RecipeController extends Controller
             }
         }
         $items;
+        $data["ingredients"] = $items;
 
         $steps = [];
         foreach ($data as $key => $value) {
@@ -37,6 +40,7 @@ class RecipeController extends Controller
             }
         }
         $steps;
+        $data["steps"] = $steps;
 
         $user = Auth::user();
 
@@ -55,6 +59,83 @@ class RecipeController extends Controller
                 ]);
             }
         }
-        return Redirect::back()->withErrors(["success" => "Receita criada com sucesso!"]);
+        return Redirect::route('panel')->withErrors(["success" => "Receita criada com sucesso!"]);
+    }
+
+
+    public function explore()
+    {
+        $recipes = Recipe::with(['user', 'ingredients'])
+            // ->where('status', 'published')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        return view('explore', [
+            "recipes" => $recipes
+        ]);
+    }
+
+
+    public function show($id)
+    {
+        $recipe = Recipe::find($id / now()->format("dmy"));
+        if ($recipe) {
+            $data = [
+                "ip_address" => request()->ip(),
+                "user_agent" => request()->userAgent(),
+                "referrer" => request()->headers->get('referer'),
+            ];
+
+            $recipe = Recipe::with(['user', 'ingredients', 'steps'])
+                ->findOrFail($id / now()->format("dmy"));
+            $recipe->views()->create($data);
+        } else {
+            return redirect()->route('explore')->withErrors(['error' => 'Receita não encontrada.']);
+        }
+
+        return view('view', [
+            "recipe" => $recipe
+        ]);
+    }
+
+    public function aiGenerate(Request $request)
+    {
+        $title = $request->validate([
+            "title" => "required|string|max:255"
+        ])["title"];
+
+        // dd($title);
+        // Implement AI generation logic here
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer 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',
+            'Content-Type' => 'application/json',
+        ])->post('https://openrouter.ai/api/v1/chat/completions', [
+            'model' => 'mistralai/mistral-7b-instruct',
+            'messages' => [
+                ['role' => 'user', 'content' => "Crie uma receita de " . $title . ". Retorne apenas um JSON válido com os seguintes campos: \"descricao\" (descricao longa com vataminas e vantagens), \"duracao\"(ex. 1h 20min), \"level\"(ex. low), \"ingredientes\" (array de strings), \"preparo\" (array de strings). Sem explicações. Apenas o JSON. Use português de Moçambique."]
+            ]
+        ]);
+
+
+        // dd($response->body());
+        $data = $response->json();
+        if (isset($data['error'])) {
+            return response()->json(['error' => $data['error']], 400);
+        }
+        if (!isset($data['choices'][0]['message']['content'])) {
+            return response()->json(['error' => 'Invalid response format'], 400);
+        }
+
+        $ia_recipe = json_decode($data["choices"][0]["message"]["content"], true);
+        $ia_recipe["title"] = $title;
+
+        $user = Auth::user();
+        $recipes = $user->recipes;
+
+        // dd($ia_recipe);
+        return view("panel", [
+            "ia" => true,
+            "recipes" => $recipes,
+            "ia_recipe" => $ia_recipe
+        ]);
     }
 }

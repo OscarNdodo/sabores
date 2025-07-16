@@ -40,8 +40,10 @@ class AuthController extends Controller
     public function home()
     {
         $user = Auth::user();
-        $recipes = $user->recipes;
+        $recipes = $user->recipes()->orderBy('created_at', 'desc')->paginate(9);
         return view('panel', [
+            "ia" => false,
+            'ia_recipe' => [],
             "recipes" => $recipes
         ]);
     }
